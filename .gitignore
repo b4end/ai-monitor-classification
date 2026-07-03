@@ -1,0 +1,34 @@
+# Виртуальные окружения
+.venv/
+venv/
+env/
+
+# Кэш питона
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Локальные результаты тестов
+tests/test_outputs.json
+
+# Системные файлы macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Системные файлы Windows
+Thumbs.db
+ehthumbs.db
+
+# Настройки редакторов кода
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Загруженные библиотеки
+lib/
+lib64/
