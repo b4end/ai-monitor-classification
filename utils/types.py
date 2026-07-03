@@ -1,9 +1,11 @@
 from pydantic import BaseModel
 
+
 class CategoryResult(BaseModel):
     category: str
     score: float
-    matched: list[str] 
+    matched: list[str]
+
 
 class DataOutput(BaseModel):
     message: str
