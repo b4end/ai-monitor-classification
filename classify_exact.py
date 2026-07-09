@@ -1,3 +1,4 @@
+from functools import lru_cache
 from utils.types import CategoryResult, DataOutput
 from natasha import Segmenter, MorphVocab, NewsEmbedding, NewsMorphTagger, Doc
 
@@ -6,11 +7,16 @@ morph_vocab = MorphVocab()
 emb = NewsEmbedding()
 morph_tagger = NewsMorphTagger(emb)
 
-
+@lru_cache(maxsize=1024)
 def get_normalized(text: str) -> set[str]:
     """
-    Принимает text: str. Возвращает set[str] - лемматизированные слова в нижнем регистре.
-    Пунктуация удаляется автоматически.
+    Удаляет знаки препинания, разделяет строку на слова,
+    приводит к нижнему регистру и лемматизирует их.
+    
+    Args:
+        text (str): Текст для лемматизации.
+    Returns:
+        set[str]: Неизменяемое множество лемматизированных слов.
     """
     if not text or not text.strip():
         return set()
@@ -30,36 +36,47 @@ def get_normalized(text: str) -> set[str]:
     return normalized_words
 
 
-def classify(message: str, stop_words: dict[str, list[str]]) -> DataOutput:
+def classify(
+        message: str, 
+        keywords: dict[str, list[str]]
+    ) -> DataOutput:
     """
-    Принимает строку и словарь, ключ - название категории, значение - список стоп слов.
-    Возвращает структуру хранящую строку и список результатов классификации
-    для каждой категории. Список результатов состоит из названия категории,
-    оценки уверенности, списка совпавших стоп слов.
+    Классифицирует текст на категории по ключевым-словам.
+    
+    Args:
+        message (str): Исходный текст для классификации.
+        keywords (dict): Словарь, где ключ - категория, значение - список ключевых-слов/фраз.
+        
+    Returns:
+        DataOutput: Объект с исходным текстом и списком результатов по категориям.
     """
-    if not message or not stop_words:
+    if not message or not keywords:
         return DataOutput(message=message if message else "", results=[])
 
     norm_text = get_normalized(message)
     results = []
 
-    for category_name, stop_words_category in stop_words.items():
+    for category_name, keywords_category in keywords.items():
         results_matched = []
 
-        for phrase in stop_words_category:
+        for phrase in keywords_category:
             norm_phrase = get_normalized(phrase)
 
             if norm_phrase and norm_phrase.issubset(norm_text):
                 results_matched.append(phrase)
 
         score = (
-            len(results_matched) / len(stop_words_category)
-            if len(stop_words_category) > 0
+            len(results_matched) / len(keywords_category)
+            if len(keywords_category) > 0
             else 0.0
         )
 
         results.append(
-            CategoryResult(category=category_name, score=score, matched=results_matched)
+            CategoryResult(
+                category=category_name, 
+                score=score, 
+                matched=results_matched
+                )
         )
 
     results.sort(key=lambda x: x.score, reverse=True)

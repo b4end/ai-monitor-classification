@@ -32,3 +32,5 @@ ehthumbs.db
 # Загруженные библиотеки
 lib/
 lib64/
+
+.ruff_cache/

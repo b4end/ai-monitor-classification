@@ -44,8 +44,8 @@
   {
     "message": "Кругом обман",
     "results": [
-      {"category": "жкх", "score": 0.0, "matched": []},
-      {"category": "мошенничество", "score": 0.5, "matched": ["обман"]}
+      {"category": "мошенничество", "score": 0.5, "matched": ["обман"]},
+      {"category": "жкх", "score": 0.0, "matched": []}
     ]
   },
   {

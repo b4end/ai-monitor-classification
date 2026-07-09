@@ -43,9 +43,9 @@ def run_tests():
 
     for i, (test_input, expected_output) in enumerate(zip(inputs, correct_outputs)):
         message = test_input.get("message")
-        stop_words = test_input.get("stop_words")
+        keywords = test_input.get("keywords")
 
-        result_obj = classify(message=message, stop_words=stop_words)
+        result_obj = classify(message=message, keywords=keywords)
 
         try:
             result_dict = result_obj.model_dump()
