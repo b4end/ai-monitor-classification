@@ -3,16 +3,12 @@ from pydantic import BaseModel
 
 class CategoryResult(BaseModel):
     """
-    Стандартный тип данных для хранения информации по пренадлежности
-    текста к определенной категории.\n
-    Имеет форму:
-    ```
-    class CategoryResult(
-        category: str
-        score: float
-        matched: list[str]
-    )
-    ```
+    Хранит информацию по пренадлежности текста к определенной категории.
+
+    Args:
+        category (str): Название категории
+        score (float): Число от 0 до 1, порог схожести для совпадения.
+        matched (list[str]): Совпавшие ключевые слова
     """
     category: str
     score: float
@@ -21,15 +17,11 @@ class CategoryResult(BaseModel):
 
 class DataOutput(BaseModel):
     """
-    Стандартный тип данных для возврата информации по итогам функции
-    классификации для исходного текста по заданным категориям.\n
-    Имеет форму:
-    ```
-    class DataOutput(
-        message: str,
-        results: list[CategoryResult]
-    )
-    ```
+    Хранит итоги классификации для текста по заданным категориям.
+    
+    Args:
+        message (str): Текст для классификации 
+        results (list[CategoryResult]): Результаты по картегориям
     """
     message: str
     results: list[CategoryResult]
