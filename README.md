@@ -12,7 +12,7 @@
 
    Лемматизация текста сообщения и ключевых слов с помощью NLP-библиотеки `natasha`. Оценка считается по доле нормализованных ключевых-слов категории, найденных в тексте.
 
-2. **Алгоритм 2: Расстояние Левенштейна (`classify_levenshtein.py`)** — *В разработке*
+2. **Алгоритм 2: Расстояние Левенштейна (`classify_levenshtein.py`)** — *Реализовано*
 
    Нечёткое сопоставление (поиск с учетом опечаток и искажений).
 
@@ -28,17 +28,20 @@
 
 ```text
 ai-monitor-classification/
-├── classify_exact.py          # Модуль точной классификации (Алгоритм 1)
+├── classify_exact.py                # Модуль точной классификации (Алгоритм 1)
+├── classify_levenshtein.py          # Модуль нечеткой классификации (Алгоритм 2)
 ├── utils/
-│   └── types.py               # Pydantic-модели для типизации данных (CategoryResult, DataOutput)
-├── tests/
-│   ├── test_01.py             # Скрипт прогона автотестов
-│   ├── test_inputs.json       # Входные данные
-│   ├── test_correct.json      # Эталонные результаты
-│   └── test_outputs.json      # Фактические результаты (генерируется автоматически)
-├── requirements.txt           # Зависимости проекта
-├── .gitignore                 # Исключения для Git
-└── README.md                  # Документация проекта
+│   └── types.py                     # Pydantic-модели (CategoryResult, DataOutput)
+├── tests_files_classify_exact/      # Тесты для точной классификации
+│   ├── test.py                      # Скрипт прогона автотестов
+│   ├── test_inputs.json             # Входные данные
+│   ├── test_correct.json            # Эталонные результаты
+│   └── test_outputs.json            # Фактические результаты
+├── tests_files_classify_levenshtein/# Тесты для нечеткого поиска
+│   └── ...                          # (Аналогичная структура тестовых файлов)
+├── requirements.txt                 # Зависимости проекта
+├── .gitignore                       # Исключения для Git
+└── README.md                        # Документация проекта
 ```
 
 ## Установка и запуск
@@ -77,6 +80,15 @@ result = classify(message=message, keywords=categories)
 
 # Результат возвращается в виде Pydantic-модели
 print(result.model_dump_json(indent=2))
+
+# --- Использование алгоритма Левенштейна ---
+from classify_levenshtein import classify as classify_fuzzy
+
+result_fuzzy = classify_fuzzy(
+    message="На дароге агромная ямма", 
+    min_similarity=0.75,  # Обязательный параметр: порог сходимости от 0.0 до 1.0
+    keywords=categories
+)
 ```
 
 ## Тестирование
@@ -85,7 +97,11 @@ print(result.model_dump_json(indent=2))
 
 Запуск тестов осуществляется из корня проекта. Пример:
 ```bash
-python tests/test_01.py
+# Запуск тестов для точного совпадения:
+python tests_files_classify_exact/test.py
+
+# Запуск тестов для алгоритма Левенштейна:
+python tests_files_classify_levenshtein/test.py
 ```
 Скрипт автоматически замеряет время выполнения функций и сверяет вывод с эталонным файлом `test_correct.json`.
 

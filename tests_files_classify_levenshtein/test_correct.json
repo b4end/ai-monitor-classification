@@ -1,0 +1,63 @@
+[
+  {
+    "message": "Когда включат горячую воду? Отключение уже третий день!",
+    "results": [
+      {"category": "жкх", "score": 0.6666666666666666, "matched": ["горячая вода", "отключение"]},
+      {"category": "дороги", "score": 0.0, "matched": []}
+    ]
+  },
+  {
+    "message": "Отключение отапления, на дороге огромная ямма, а автабус не ходит",
+    "results": [
+      {"category": "жкх", "score": 1.0, "matched": ["отключение", "отопление"]},
+      {"category": "дороги", "score": 1.0, "matched": ["яма"]},
+      {"category": "транспорт", "score": 1.0, "matched": ["автобус"]}
+    ]
+  },
+  {
+    "message": "Отключение отапления",
+    "results": [
+      {"category": "жкх", "score": 0.5, "matched": ["отключение"]}
+    ]
+  },
+  {
+    "message": "Гарячая воода сегодня в трубах!",
+    "results": [
+      {"category": "жкх", "score": 1.0, "matched": ["горячая вода"]}
+    ]
+  },
+  {
+    "message": "",
+    "results": []
+  },
+  {
+    "message": "На дороге яма",
+    "results": []
+  },
+  {
+    "message": "ЯММА!!! на ДОРОГЕ... ПРОПКА!",
+    "results": [
+      {"category": "дороги", "score": 0.6666666666666666, "matched": ["яма", "пробка"]}
+    ]
+  },
+  {
+    "message": "Сегодня отличная погода, светит солнце.",
+    "results": [
+      {"category": "жкх", "score": 0.0, "matched": []},
+      {"category": "дороги", "score": 0.0, "matched": []}
+    ]
+  },
+  {
+    "message": "Кругом обман",
+    "results": [
+      {"category": "мошенничество", "score": 0.5, "matched": ["обман"]},
+      {"category": "жкх", "score": 0.0, "matched": []}
+    ]
+  },
+  {
+    "message": "   !?,.  ",
+    "results": [
+      {"category": "дороги", "score": 0.0, "matched": []}
+    ]
+  }
+]
