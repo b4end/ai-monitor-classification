@@ -53,6 +53,11 @@ def is_word_in_text_fuzzy(
         
     Returns:
         bool: True, если найдено похожее слово, иначе False.
+
+    ---
+    min_similarity вычисляется делением количества правок на длину самого 
+    длинного слова и вычитанием этого значения из единицы.\n
+    Пример: если min_similarity = 0.75, то для слова из 4 букв допускается 1 правка. 
     """
     if target_word in text_words:
         return True
@@ -83,6 +88,11 @@ def classify(
         
     Returns:
         DataOutput: Объект с исходным текстом и списком результатов по категориям.
+
+    ---
+    min_similarity вычисляется делением количества правок на длину самого 
+    длинного слова и вычитанием этого значения из единицы.\n
+    Пример: если min_similarity = 0.75, то для слова из 4 букв допускается 1 правка. 
     """
     if not message or not keywords:
         return DataOutput(message=message if message else "", results=[])
